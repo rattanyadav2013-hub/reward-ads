@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
+    <style>
+        body { 
+            background-color: #1e1e1e; 
+            color: white; 
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            font-family: sans-serif; 
+        }
+        .knight-card {
+            background: #2c2c2c;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        button { 
+            padding: 15px 30px; 
+            font-size: 18px; 
+            font-weight: bold;
+            background-color: #2aabee; 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            margin-top: 20px;
+        }
+        button:active { background-color: #2496d1; }
+    </style>
+</head>
+<body>
+    <div class="knight-card">
+        <h2>Knight Rewards</h2>
+        <p>Watch a short video to earn points!</p>
+        <button id="showAdBtn">WATCH AD</button>
+    </div>
+
+    <script>
+        window.Telegram.WebApp.ready();
+        window.Telegram.WebApp.expand(); // Opens the app to full screen
+
+        // Initialize Adsgram
+        const AdController = window.Adsgram.init({ blockId: "3854" });
+        
+        document.getElementById('showAdBtn').addEventListener('click', () => {
+            AdController.show().then((result) => {
+                // If ad is completed successfully
+                window.Telegram.WebApp.showAlert("Ad watched! Your points will be added.");
+                window.Telegram.WebApp.close();
+            }).catch((result) => {
+                // If ad is skipped or fails
+                alert("Ad not finished. Watch the full video to earn.");
+            });
+        });
+    </script>
+</body>
+</html>
